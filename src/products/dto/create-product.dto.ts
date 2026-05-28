@@ -1,0 +1,37 @@
+import {
+  IsInt,
+  IsNotEmpty,
+  IsNumber,
+  IsObject,
+  IsOptional,
+  IsString,
+  Min,
+} from 'class-validator';
+
+export class CreateProductDto {
+  @IsInt()
+  categoryId: number;
+
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @IsOptional()
+  @IsString()
+  description?: string;
+
+  @IsNumber()
+  @Min(0)
+  price: number;
+
+  @IsInt()
+  @Min(0)
+  stock: number;
+
+  @IsOptional()
+  @IsString()
+  imageUrl?: string;
+
+  @IsObject()
+  specs: object;
+}
