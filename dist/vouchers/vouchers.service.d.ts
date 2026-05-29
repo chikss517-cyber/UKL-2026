@@ -5,31 +5,31 @@ export declare class VouchersService {
     private readonly prisma;
     constructor(prisma: PrismaService);
     create(data: CreateVoucherDto): Promise<{
+        id: number;
         code: string;
         type: import(".prisma/client").$Enums.VoucherType;
         value: number;
         minPurchase: number | null;
-        active: boolean;
         expiredAt: Date;
-        id: number;
+        active: boolean;
     }>;
     findAll(): Promise<{
+        id: number;
         code: string;
         type: import(".prisma/client").$Enums.VoucherType;
         value: number;
         minPurchase: number | null;
-        active: boolean;
         expiredAt: Date;
-        id: number;
+        active: boolean;
     }[]>;
     findOne(id: number): Promise<{
+        id: number;
         code: string;
         type: import(".prisma/client").$Enums.VoucherType;
         value: number;
         minPurchase: number | null;
-        active: boolean;
         expiredAt: Date;
-        id: number;
+        active: boolean;
     }>;
     apply(data: ApplyVoucherDto): Promise<{
         voucher: string;
@@ -38,12 +38,12 @@ export declare class VouchersService {
         finalTotal: number;
     }>;
     remove(id: number): Promise<{
+        id: number;
         code: string;
         type: import(".prisma/client").$Enums.VoucherType;
         value: number;
         minPurchase: number | null;
-        active: boolean;
         expiredAt: Date;
-        id: number;
+        active: boolean;
     }>;
 }

@@ -5,22 +5,22 @@ export declare class VouchersController {
     private readonly vouchersService;
     constructor(vouchersService: VouchersService);
     create(data: CreateVoucherDto): Promise<{
+        id: number;
         code: string;
         type: import(".prisma/client").$Enums.VoucherType;
         value: number;
         minPurchase: number | null;
-        active: boolean;
         expiredAt: Date;
-        id: number;
+        active: boolean;
     }>;
     findAll(): Promise<{
+        id: number;
         code: string;
         type: import(".prisma/client").$Enums.VoucherType;
         value: number;
         minPurchase: number | null;
-        active: boolean;
         expiredAt: Date;
-        id: number;
+        active: boolean;
     }[]>;
     apply(data: ApplyVoucherDto): Promise<{
         voucher: string;
@@ -29,12 +29,12 @@ export declare class VouchersController {
         finalTotal: number;
     }>;
     remove(id: string): Promise<{
+        id: number;
         code: string;
         type: import(".prisma/client").$Enums.VoucherType;
         value: number;
         minPurchase: number | null;
-        active: boolean;
         expiredAt: Date;
-        id: number;
+        active: boolean;
     }>;
 }
