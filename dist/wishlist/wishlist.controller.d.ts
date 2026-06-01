@@ -14,12 +14,12 @@ export declare class WishlistController {
             id: number;
             createdAt: Date;
             name: string;
-            categoryId: number;
-            description: string | null;
             price: number;
             stock: number;
-            imageUrl: string | null;
+            categoryId: number;
             specs: import("@prisma/client/runtime/library").JsonValue;
+            description: string | null;
+            imageUrl: string | null;
         };
     } & {
         id: number;

@@ -16,46 +16,48 @@ let OrdersService = class OrdersService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    async checkout(userId) {
-        const cart = await this.prisma.cart.findFirst({
-            where: {
-                userId,
-            },
-            include: {
-                items: {
-                    include: {
-                        product: true,
-                    },
-                },
-            },
-        });
-        if (!cart || cart.items.length === 0) {
-            throw new common_1.NotFoundException('Cart is empty');
+    async checkout(userId, dto) {
+        if (!dto.items || dto.items.length === 0) {
+            throw new common_1.NotFoundException('Tidak ada item yang dikirim!');
         }
         let total = 0;
-        for (const item of cart.items) {
-            total += item.product.price * item.quantity;
+        for (const item of dto.items) {
+            const product = await this.prisma.product.findUnique({
+                where: { id: Number(item.productId || item.id) },
+            });
+            if (!product) {
+                throw new common_1.NotFoundException(`Produk ID ${item.productId || item.id} tidak ditemukan`);
+            }
+            total += product.price * item.quantity;
         }
+        const shippingCost = total >= 500000 ? 0 : 25000;
+        const grandTotal = total + shippingCost;
         return this.prisma.$transaction(async (tx) => {
             const order = await tx.order.create({
                 data: {
                     userId,
-                    total,
+                    total: grandTotal,
+                    address: dto.address,
+                    phone: dto.phone,
+                    paymentMethod: dto.paymentMethod?.toUpperCase() || 'COD',
+                    mapLink: dto.mapLink || null,
+                    status: 'PENDING',
                 },
             });
-            for (const item of cart.items) {
+            for (const item of dto.items) {
+                const product = await tx.product.findUnique({
+                    where: { id: Number(item.productId || item.id) },
+                });
                 await tx.orderItem.create({
                     data: {
                         orderId: order.id,
-                        productId: item.productId,
+                        productId: product.id,
                         quantity: item.quantity,
-                        price: item.product.price,
+                        price: product.price,
                     },
                 });
                 await tx.product.update({
-                    where: {
-                        id: item.productId,
-                    },
+                    where: { id: product.id },
                     data: {
                         stock: {
                             decrement: item.quantity,
@@ -63,22 +65,15 @@ let OrdersService = class OrdersService {
                     },
                 });
             }
-            await tx.cartItem.deleteMany({
-                where: {
-                    cartId: cart.id,
-                },
-            });
             return order;
         });
     }
-    async findAll() {
+    async findByUser(userId) {
         return this.prisma.order.findMany({
+            where: { userId },
             include: {
-                user: true,
                 items: {
-                    include: {
-                        product: true,
-                    },
+                    include: { product: true },
                 },
             },
             orderBy: {
@@ -86,43 +81,43 @@ let OrdersService = class OrdersService {
             },
         });
     }
-    async findOne(id) {
-        const order = await this.prisma.order.findUnique({
-            where: {
-                id,
-            },
+    async findAll() {
+        return this.prisma.order.findMany({
             include: {
                 user: true,
                 items: {
-                    include: {
-                        product: true,
-                    },
+                    include: { product: true },
                 },
-                payment: true,
+            },
+            orderBy: { id: 'desc' },
+        });
+    }
+    async findOne(id) {
+        const order = await this.prisma.order.findUnique({
+            where: { id },
+            include: {
+                user: true,
+                items: {
+                    include: { product: true },
+                },
             },
         });
         if (!order) {
-            throw new common_1.NotFoundException('Order not found');
+            throw new common_1.NotFoundException('Data pesanan tidak ditemukan');
         }
         return order;
     }
     async updateStatus(id, status) {
         await this.findOne(id);
         return this.prisma.order.update({
-            where: {
-                id,
-            },
-            data: {
-                status,
-            },
+            where: { id },
+            data: { status },
         });
     }
     async remove(id) {
         await this.findOne(id);
         return this.prisma.order.delete({
-            where: {
-                id,
-            },
+            where: { id },
         });
     }
 };

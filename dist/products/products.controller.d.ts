@@ -4,16 +4,16 @@ import { UpdateProductDto } from './dto/update-product.dto';
 export declare class ProductsController {
     private readonly productsService;
     constructor(productsService: ProductsService);
-    create(data: CreateProductDto): Promise<{
+    create(data: CreateProductDto, req: any, file: any): Promise<{
         id: number;
         createdAt: Date;
         name: string;
-        categoryId: number;
-        description: string | null;
         price: number;
         stock: number;
-        imageUrl: string | null;
+        categoryId: number;
         specs: import("@prisma/client/runtime/library").JsonValue;
+        description: string | null;
+        imageUrl: string | null;
     }>;
     findAll(categoryId?: string, minPrice?: string, maxPrice?: string): Promise<({
         category: {
@@ -24,12 +24,12 @@ export declare class ProductsController {
         id: number;
         createdAt: Date;
         name: string;
-        categoryId: number;
-        description: string | null;
         price: number;
         stock: number;
-        imageUrl: string | null;
+        categoryId: number;
         specs: import("@prisma/client/runtime/library").JsonValue;
+        description: string | null;
+        imageUrl: string | null;
     })[]>;
     findOne(id: string): Promise<{
         category: {
@@ -49,33 +49,33 @@ export declare class ProductsController {
         id: number;
         createdAt: Date;
         name: string;
-        categoryId: number;
-        description: string | null;
         price: number;
         stock: number;
-        imageUrl: string | null;
+        categoryId: number;
         specs: import("@prisma/client/runtime/library").JsonValue;
+        description: string | null;
+        imageUrl: string | null;
     }>;
-    update(id: string, data: UpdateProductDto): Promise<{
+    update(id: string, data: UpdateProductDto, file: any): Promise<{
         id: number;
         createdAt: Date;
         name: string;
-        categoryId: number;
-        description: string | null;
         price: number;
         stock: number;
-        imageUrl: string | null;
+        categoryId: number;
         specs: import("@prisma/client/runtime/library").JsonValue;
+        description: string | null;
+        imageUrl: string | null;
     }>;
     remove(id: string): Promise<{
         id: number;
         createdAt: Date;
         name: string;
-        categoryId: number;
-        description: string | null;
         price: number;
         stock: number;
-        imageUrl: string | null;
+        categoryId: number;
         specs: import("@prisma/client/runtime/library").JsonValue;
+        description: string | null;
+        imageUrl: string | null;
     }>;
 }

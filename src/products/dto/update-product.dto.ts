@@ -6,11 +6,9 @@ import {
   IsString,
   Min,
 } from 'class-validator';
+import { Transform } from 'class-transformer';
 
 export class UpdateProductDto {
-  @IsOptional()
-  @IsInt()
-  categoryId?: number;
 
   @IsOptional()
   @IsString()
@@ -21,20 +19,32 @@ export class UpdateProductDto {
   description?: string;
 
   @IsOptional()
+  @Transform(({ value }) => Number(value))
+  @IsInt()
+  categoryId?: number;
+
+  @IsOptional()
+  @Transform(({ value }) => Number(value))
   @IsNumber()
   @Min(0)
   price?: number;
 
   @IsOptional()
+  @Transform(({ value }) => Number(value))
   @IsInt()
   @Min(0)
   stock?: number;
 
   @IsOptional()
-  @IsString()
-  imageUrl?: string;
-
-  @IsOptional()
+  @Transform(({ value }) => {
+    try {
+      return typeof value === 'string'
+        ? JSON.parse(value)
+        : value;
+    } catch {
+      return value;
+    }
+  })
   @IsObject()
   specs?: object;
 }
