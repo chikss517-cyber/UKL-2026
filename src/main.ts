@@ -9,22 +9,35 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
+  // =========================
+  // CORS
+  // =========================
   app.enableCors({
-    origin: ['http://localhost:3000'],
+    origin: true,
     credentials: true,
   });
 
+  // =========================
+  // STATIC FILES
+  // =========================
   app.useStaticAssets(join(process.cwd(), 'uploads'), {
     prefix: '/uploads/',
   });
 
+  // =========================
+  // VALIDATION PIPE
+  // =========================
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
       transform: true,
+      forbidNonWhitelisted: false,
     }),
   );
 
+  // =========================
+  // SWAGGER
+  // =========================
   const config = new DocumentBuilder()
     .setTitle('Toko Online API')
     .setDescription('API E-Commerce Komponen Komputer')
@@ -36,11 +49,15 @@ async function bootstrap() {
 
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(3001);
+  // =========================
+  // PORT
+  // =========================
+  const port = Number(process.env.PORT) || 3001;
 
-  console.log('Server running on http://localhost:3001');
+  await app.listen(port, '0.0.0.0');
 
-  console.log('Swagger running on http://localhost:3001/api');
+  console.log(`🚀 Server running on port ${port}`);
+  console.log(`📖 Swagger: http://localhost:${port}/api`);
 }
 
 bootstrap();
