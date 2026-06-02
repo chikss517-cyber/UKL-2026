@@ -7,7 +7,7 @@ const app_module_1 = require("./app.module");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.enableCors({
-        origin: ['http://localhost:3000'],
+        origin: ['http://localhost:3001'],
         credentials: true,
     });
     app.useGlobalPipes(new common_1.ValidationPipe({
@@ -23,9 +23,9 @@ async function bootstrap() {
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, config);
     swagger_1.SwaggerModule.setup('api', app, document);
-    await app.listen(3000);
-    console.log('Server running on http://localhost:3000');
-    console.log('Swagger running on http://localhost:3000/api');
+    await app.listen(3001);
+    console.log('Server running on http://localhost:3001');
+    console.log('Swagger running on http://localhost:3001/api');
 }
 bootstrap();
 //# sourceMappingURL=main.js.map
