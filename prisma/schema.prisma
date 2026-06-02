@@ -93,6 +93,10 @@ model Order {
   user      User        @relation(fields: [userId], references: [id])
   items     OrderItem[]
   payment   Payment?
+  address       String
+  phone         String
+  paymentMethod String      @default("COD")
+  mapLink       String?     
 }
 
 model OrderItem {

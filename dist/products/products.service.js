@@ -16,10 +16,33 @@ let ProductsService = class ProductsService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    async create(data) {
-        return this.prisma.product.create({
-            data,
-        });
+    async create(data, file) {
+        try {
+            const imagePath = file ? file.filename || file.path : 'default-hardware.jpg';
+            let parsedSpecs = data.specs;
+            if (typeof parsedSpecs === 'string') {
+                try {
+                    parsedSpecs = JSON.parse(parsedSpecs);
+                }
+                catch {
+                    parsedSpecs = { detail: data.specs };
+                }
+            }
+            return await this.prisma.product.create({
+                data: {
+                    name: data.name,
+                    price: Number(data.price),
+                    stock: Number(data.stock),
+                    categoryId: Number(data.categoryId),
+                    specs: parsedSpecs,
+                    imageUrl: imagePath,
+                },
+            });
+        }
+        catch (error) {
+            console.error("🚨 DETAIL ERROR PRISMA DB:", error);
+            throw new common_1.InternalServerErrorException("Gagal menyimpan produk. Pastikan value categoryId (ID Kategori) sudah terdaftar di database kamu!");
+        }
     }
     async findAll(categoryId, minPrice, maxPrice) {
         return this.prisma.product.findMany({
@@ -53,21 +76,47 @@ let ProductsService = class ProductsService {
         }
         return product;
     }
-    async update(id, data) {
+    async update(id, data, file) {
         await this.findOne(id);
-        return this.prisma.product.update({
-            where: {
-                id,
-            },
-            data,
-        });
+        try {
+            const updateData = {
+                name: data.name,
+                price: data.price ? Number(data.price) : undefined,
+                stock: data.stock ? Number(data.stock) : undefined,
+                categoryId: data.categoryId ? Number(data.categoryId) : undefined,
+            };
+            if (file) {
+                updateData.imageUrl = file.filename || file.path;
+            }
+            if (data.specs) {
+                updateData.specs = typeof data.specs === 'string' ? JSON.parse(data.specs) : data.specs;
+            }
+            return await this.prisma.product.update({
+                where: { id },
+                data: updateData,
+            });
+        }
+        catch (error) {
+            console.error("🚨 DETAIL ERROR UPDATE PRISMA DB:", error);
+            throw new common_1.InternalServerErrorException("Gagal memperbarui data produk.");
+        }
     }
     async remove(id) {
         await this.findOne(id);
+        await this.prisma.cartItem.deleteMany({
+            where: { productId: id }
+        });
+        await this.prisma.wishlist.deleteMany({
+            where: { productId: id }
+        });
+        await this.prisma.review.deleteMany({
+            where: { productId: id }
+        });
+        await this.prisma.orderItem.deleteMany({
+            where: { productId: id }
+        });
         return this.prisma.product.delete({
-            where: {
-                id,
-            },
+            where: { id }
         });
     }
 };

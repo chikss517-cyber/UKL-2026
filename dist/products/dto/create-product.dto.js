@@ -11,39 +11,41 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateProductDto = void 0;
 const class_validator_1 = require("class-validator");
+const class_transformer_1 = require("class-transformer");
 class CreateProductDto {
 }
 exports.CreateProductDto = CreateProductDto;
-__decorate([
-    (0, class_validator_1.IsInt)(),
-    __metadata("design:type", Number)
-], CreateProductDto.prototype, "categoryId", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateProductDto.prototype, "name", void 0);
 __decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], CreateProductDto.prototype, "description", void 0);
-__decorate([
+    (0, class_transformer_1.Transform)(({ value }) => Number(value)),
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.Min)(0),
     __metadata("design:type", Number)
 ], CreateProductDto.prototype, "price", void 0);
 __decorate([
-    (0, class_validator_1.IsInt)(),
+    (0, class_transformer_1.Transform)(({ value }) => Math.floor(Number(value))),
+    (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.Min)(0),
     __metadata("design:type", Number)
 ], CreateProductDto.prototype, "stock", void 0);
 __decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], CreateProductDto.prototype, "imageUrl", void 0);
+    (0, class_transformer_1.Transform)(({ value }) => Math.floor(Number(value))),
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], CreateProductDto.prototype, "categoryId", void 0);
 __decorate([
+    (0, class_transformer_1.Transform)(({ value }) => {
+        try {
+            return typeof value === 'string' ? JSON.parse(value) : value;
+        }
+        catch {
+            return value;
+        }
+    }),
     (0, class_validator_1.IsObject)(),
     __metadata("design:type", Object)
 ], CreateProductDto.prototype, "specs", void 0);

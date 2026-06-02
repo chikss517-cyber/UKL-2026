@@ -6,18 +6,18 @@ export declare class VouchersController {
     constructor(vouchersService: VouchersService);
     create(data: CreateVoucherDto): Promise<{
         id: number;
+        value: number;
         code: string;
         type: import(".prisma/client").$Enums.VoucherType;
-        value: number;
         minPurchase: number | null;
         expiredAt: Date;
         active: boolean;
     }>;
     findAll(): Promise<{
         id: number;
+        value: number;
         code: string;
         type: import(".prisma/client").$Enums.VoucherType;
-        value: number;
         minPurchase: number | null;
         expiredAt: Date;
         active: boolean;
@@ -30,9 +30,9 @@ export declare class VouchersController {
     }>;
     remove(id: string): Promise<{
         id: number;
+        value: number;
         code: string;
         type: import(".prisma/client").$Enums.VoucherType;
-        value: number;
         minPurchase: number | null;
         expiredAt: Date;
         active: boolean;

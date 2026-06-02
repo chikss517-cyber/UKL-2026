@@ -19,6 +19,10 @@ export declare class PaymentsController {
             userId: number;
             total: number;
             status: import(".prisma/client").$Enums.OrderStatus;
+            address: string;
+            phone: string;
+            paymentMethod: string;
+            mapLink: string | null;
         };
     } & {
         id: number;
@@ -35,6 +39,10 @@ export declare class PaymentsController {
             userId: number;
             total: number;
             status: import(".prisma/client").$Enums.OrderStatus;
+            address: string;
+            phone: string;
+            paymentMethod: string;
+            mapLink: string | null;
         };
     } & {
         id: number;

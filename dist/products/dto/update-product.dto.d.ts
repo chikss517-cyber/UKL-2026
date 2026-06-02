@@ -1,9 +1,8 @@
 export declare class UpdateProductDto {
-    categoryId?: number;
     name?: string;
     description?: string;
+    categoryId?: number;
     price?: number;
     stock?: number;
-    imageUrl?: string;
     specs?: object;
 }

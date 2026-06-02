@@ -9,12 +9,10 @@ import { JwtStrategy } from './guard/jwt.strategy';
 @Module({
   imports: [
     UsersModule,
-
     PassportModule,
-
+    // Ganti process.env dengan string teks langsung di bawah ini
     JwtModule.register({
-      secret: process.env.JWT_SECRET,
-
+      secret: 'rahasiajwt',
       signOptions: {
         expiresIn: '7d',
       },
