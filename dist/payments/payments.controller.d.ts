@@ -10,7 +10,7 @@ export declare class PaymentsController {
     uploadProof(id: string, file: Express.Multer.File): Promise<any>;
     verify(id: string, data: VerifyPaymentDto): Promise<{
         id: number;
-        status: import(".prisma/client").$Enums.PaymentStatus;
+        status: import(".prisma/client").$Enums.payment_status;
         createdAt: Date;
         orderId: number;
         amount: number;

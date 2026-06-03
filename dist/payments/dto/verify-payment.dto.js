@@ -17,6 +17,8 @@ var PaymentStatus;
     PaymentStatus["COMPLETED"] = "COMPLETED";
     PaymentStatus["FAILED"] = "FAILED";
     PaymentStatus["CANCELLED"] = "CANCELLED";
+    PaymentStatus["PAID"] = "PAID";
+    PaymentStatus["WAITING_VERIFICATION"] = "WAITING_VERIFICATION";
 })(PaymentStatus || (exports.PaymentStatus = PaymentStatus = {}));
 class VerifyPaymentDto {
 }

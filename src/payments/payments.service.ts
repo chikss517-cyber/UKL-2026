@@ -2,9 +2,9 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { PrismaService } from '../prisma/prisma.service';
-import { PaymentStatus } from '@prisma/client';
 
 import { CreatePaymentDto } from './dto/create-payment.dto';
+import { PaymentStatus } from './dto/verify-payment.dto';
 
 @Injectable()
 export class PaymentsService {
@@ -78,7 +78,7 @@ export class PaymentsService {
         },
 
         data: {
-          status,
+          status: status as any,
         },
       });
 

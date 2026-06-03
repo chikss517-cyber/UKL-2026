@@ -4,14 +4,14 @@ export declare class OrdersController {
     constructor(ordersService: OrdersService);
     checkout(req: any, dto: any): Promise<{
         id: number;
+        userId: number;
         total: number;
-        status: import(".prisma/client").$Enums.OrderStatus;
+        status: import(".prisma/client").$Enums.order_status;
         address: string;
         phone: string;
         paymentMethod: string;
         mapLink: string | null;
         createdAt: Date;
-        userId: number;
     }>;
     findMyOrders(req: any): Promise<any>;
     findAll(): Promise<any>;

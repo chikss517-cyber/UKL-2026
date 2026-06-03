@@ -5,6 +5,8 @@ export enum PaymentStatus {
   COMPLETED = 'COMPLETED',
   FAILED = 'FAILED',
   CANCELLED = 'CANCELLED',
+  PAID = 'PAID',
+  WAITING_VERIFICATION = 'WAITING_VERIFICATION',
 }
 
 export class VerifyPaymentDto {

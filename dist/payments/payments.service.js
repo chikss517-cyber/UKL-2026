@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PaymentsService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
-const client_1 = require("@prisma/client");
+const verify_payment_dto_1 = require("./dto/verify-payment.dto");
 let PaymentsService = class PaymentsService {
     constructor(prisma) {
         this.prisma = prisma;
@@ -60,7 +60,7 @@ let PaymentsService = class PaymentsService {
             },
             data: {
                 proofUrl,
-                status: client_1.PaymentStatus.WAITING_VERIFICATION,
+                status: verify_payment_dto_1.PaymentStatus.WAITING_VERIFICATION,
             },
         });
     }
@@ -72,10 +72,10 @@ let PaymentsService = class PaymentsService {
                     id,
                 },
                 data: {
-                    status,
+                    status: status,
                 },
             });
-            if (status === client_1.PaymentStatus.PAID) {
+            if (status === verify_payment_dto_1.PaymentStatus.PAID) {
                 await tx.order.update({
                     where: {
                         id: payment.orderId,

@@ -48,7 +48,7 @@ let OrdersService = class OrdersService {
                 const product = await tx.product.findUnique({
                     where: { id: Number(item.productId || item.id) },
                 });
-                await tx.orderItem.create({
+                await tx.orderitem.create({
                     data: {
                         orderId: order.id,
                         productId: product.id,
