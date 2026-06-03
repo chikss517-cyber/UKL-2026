@@ -30,9 +30,6 @@ let DashboardService = class DashboardService {
             totalRevenue += order.total;
         }
         const recentOrders = await this.prisma.order.findMany({
-            include: {
-                user: true,
-            },
             orderBy: {
                 id: 'desc',
             },

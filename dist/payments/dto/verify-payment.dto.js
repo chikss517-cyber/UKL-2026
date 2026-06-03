@@ -9,14 +9,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VerifyPaymentDto = void 0;
+exports.VerifyPaymentDto = exports.PaymentStatus = void 0;
 const class_validator_1 = require("class-validator");
-const client_1 = require("@prisma/client");
+var PaymentStatus;
+(function (PaymentStatus) {
+    PaymentStatus["PENDING"] = "PENDING";
+    PaymentStatus["COMPLETED"] = "COMPLETED";
+    PaymentStatus["FAILED"] = "FAILED";
+    PaymentStatus["CANCELLED"] = "CANCELLED";
+})(PaymentStatus || (exports.PaymentStatus = PaymentStatus = {}));
 class VerifyPaymentDto {
 }
 exports.VerifyPaymentDto = VerifyPaymentDto;
 __decorate([
-    (0, class_validator_1.IsEnum)(client_1.PaymentStatus),
+    (0, class_validator_1.IsEnum)(PaymentStatus),
     __metadata("design:type", String)
 ], VerifyPaymentDto.prototype, "status", void 0);
 //# sourceMappingURL=verify-payment.dto.js.map

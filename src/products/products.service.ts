@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, InternalServerErrorException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -11,7 +15,9 @@ export class ProductsService {
   async create(data: CreateProductDto, file?: any) {
     try {
       // 1. Ambil path/nama file gambar jika diunggah, jika tidak beri string kosong/default
-      const imagePath = file ? file.filename || file.path : 'default-hardware.jpg';
+      const imagePath = file
+        ? file.filename || file.path
+        : 'default-hardware.jpg';
 
       // 2. Antisipasi validasi tipe data 'specs' (Pastikan berupa Objek JSON asli saat masuk Prisma)
       let parsedSpecs = data.specs;
@@ -35,23 +41,28 @@ export class ProductsService {
         },
       });
     } catch (error) {
-      console.error("🚨 DETAIL ERROR PRISMA DB:", error);
-      throw new InternalServerErrorException("Gagal menyimpan produk. Pastikan value categoryId (ID Kategori) sudah terdaftar di database kamu!");
+      console.error('🚨 DETAIL ERROR PRISMA DB:', error);
+      throw new InternalServerErrorException(
+        'Gagal menyimpan produk. Pastikan value categoryId (ID Kategori) sudah terdaftar di database kamu!',
+      );
     }
   }
 
   async findAll(categoryId?: number, minPrice?: number, maxPrice?: number) {
+    const where: any = {};
+
+    if (categoryId !== undefined) {
+      where.categoryId = categoryId;
+    }
+
+    if (minPrice !== undefined || maxPrice !== undefined) {
+      where.price = {};
+      if (minPrice !== undefined) where.price.gte = minPrice;
+      if (maxPrice !== undefined) where.price.lte = maxPrice;
+    }
+
     return this.prisma.product.findMany({
-      where: {
-        categoryId,
-        price: {
-          gte: minPrice,
-          lte: maxPrice,
-        },
-      },
-      include: {
-        category: true,
-      },
+      where,
       orderBy: {
         id: 'desc',
       },
@@ -63,10 +74,6 @@ export class ProductsService {
       where: {
         id,
       },
-      include: {
-        category: true,
-        reviews: true,
-      },
     });
 
     if (!product) {
@@ -76,7 +83,7 @@ export class ProductsService {
     return product;
   }
 
-// 📝 SESUAIKAN JUGA UNTUK METHOD UPDATE
+  // 📝 SESUAIKAN JUGA UNTUK METHOD UPDATE
   async update(id: number, data: UpdateProductDto, file?: any) {
     await this.findOne(id);
     try {
@@ -89,11 +96,12 @@ export class ProductsService {
 
       // 🛠️ PERBAIKAN DI SINI: Ubah 'image' menjadi 'image_url' agar sinkron dengan database
       if (file) {
-        updateData.imageUrl = file.filename || file.path; 
+        updateData.imageUrl = file.filename || file.path;
       }
 
       if (data.specs) {
-        updateData.specs = typeof data.specs === 'string' ? JSON.parse(data.specs) : data.specs;
+        updateData.specs =
+          typeof data.specs === 'string' ? JSON.parse(data.specs) : data.specs;
       }
 
       return await this.prisma.product.update({
@@ -101,32 +109,32 @@ export class ProductsService {
         data: updateData,
       });
     } catch (error) {
-      console.error("🚨 DETAIL ERROR UPDATE PRISMA DB:", error);
-      throw new InternalServerErrorException("Gagal memperbarui data produk.");
+      console.error('🚨 DETAIL ERROR UPDATE PRISMA DB:', error);
+      throw new InternalServerErrorException('Gagal memperbarui data produk.');
     }
   }
 
   async remove(id: number) {
-  await this.findOne(id);
+    await this.findOne(id);
 
-  await this.prisma.cartItem.deleteMany({
-    where: { productId: id }
-  });
+    await this.prisma.cartitem.deleteMany({
+      where: { productId: id },
+    });
 
-  await this.prisma.wishlist.deleteMany({
-    where: { productId: id }
-  });
+    await this.prisma.wishlist.deleteMany({
+      where: { productId: id },
+    });
 
-  await this.prisma.review.deleteMany({
-    where: { productId: id }
-  });
+    await this.prisma.review.deleteMany({
+      where: { productId: id },
+    });
 
-  await this.prisma.orderItem.deleteMany({
-    where: { productId: id }
-  });
+    await this.prisma.orderitem.deleteMany({
+      where: { productId: id },
+    });
 
-  return this.prisma.product.delete({
-    where: { id }
-  });
-}
+    return this.prisma.product.delete({
+      where: { id },
+    });
+  }
 }

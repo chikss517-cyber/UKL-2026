@@ -18,7 +18,9 @@ let ProductsService = class ProductsService {
     }
     async create(data, file) {
         try {
-            const imagePath = file ? file.filename || file.path : 'default-hardware.jpg';
+            const imagePath = file
+                ? file.filename || file.path
+                : 'default-hardware.jpg';
             let parsedSpecs = data.specs;
             if (typeof parsedSpecs === 'string') {
                 try {
@@ -40,22 +42,24 @@ let ProductsService = class ProductsService {
             });
         }
         catch (error) {
-            console.error("🚨 DETAIL ERROR PRISMA DB:", error);
-            throw new common_1.InternalServerErrorException("Gagal menyimpan produk. Pastikan value categoryId (ID Kategori) sudah terdaftar di database kamu!");
+            console.error('🚨 DETAIL ERROR PRISMA DB:', error);
+            throw new common_1.InternalServerErrorException('Gagal menyimpan produk. Pastikan value categoryId (ID Kategori) sudah terdaftar di database kamu!');
         }
     }
     async findAll(categoryId, minPrice, maxPrice) {
+        const where = {};
+        if (categoryId !== undefined) {
+            where.categoryId = categoryId;
+        }
+        if (minPrice !== undefined || maxPrice !== undefined) {
+            where.price = {};
+            if (minPrice !== undefined)
+                where.price.gte = minPrice;
+            if (maxPrice !== undefined)
+                where.price.lte = maxPrice;
+        }
         return this.prisma.product.findMany({
-            where: {
-                categoryId,
-                price: {
-                    gte: minPrice,
-                    lte: maxPrice,
-                },
-            },
-            include: {
-                category: true,
-            },
+            where,
             orderBy: {
                 id: 'desc',
             },
@@ -65,10 +69,6 @@ let ProductsService = class ProductsService {
         const product = await this.prisma.product.findUnique({
             where: {
                 id,
-            },
-            include: {
-                category: true,
-                reviews: true,
             },
         });
         if (!product) {
@@ -89,7 +89,8 @@ let ProductsService = class ProductsService {
                 updateData.imageUrl = file.filename || file.path;
             }
             if (data.specs) {
-                updateData.specs = typeof data.specs === 'string' ? JSON.parse(data.specs) : data.specs;
+                updateData.specs =
+                    typeof data.specs === 'string' ? JSON.parse(data.specs) : data.specs;
             }
             return await this.prisma.product.update({
                 where: { id },
@@ -97,26 +98,26 @@ let ProductsService = class ProductsService {
             });
         }
         catch (error) {
-            console.error("🚨 DETAIL ERROR UPDATE PRISMA DB:", error);
-            throw new common_1.InternalServerErrorException("Gagal memperbarui data produk.");
+            console.error('🚨 DETAIL ERROR UPDATE PRISMA DB:', error);
+            throw new common_1.InternalServerErrorException('Gagal memperbarui data produk.');
         }
     }
     async remove(id) {
         await this.findOne(id);
-        await this.prisma.cartItem.deleteMany({
-            where: { productId: id }
+        await this.prisma.cartitem.deleteMany({
+            where: { productId: id },
         });
         await this.prisma.wishlist.deleteMany({
-            where: { productId: id }
+            where: { productId: id },
         });
         await this.prisma.review.deleteMany({
-            where: { productId: id }
+            where: { productId: id },
         });
-        await this.prisma.orderItem.deleteMany({
-            where: { productId: id }
+        await this.prisma.orderitem.deleteMany({
+            where: { productId: id },
         });
         return this.prisma.product.delete({
-            where: { id }
+            where: { id },
         });
     }
 };

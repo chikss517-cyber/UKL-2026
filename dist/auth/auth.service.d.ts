@@ -8,13 +8,7 @@ export declare class AuthService {
     constructor(usersService: UsersService, jwtService: JwtService);
     register(data: RegisterDto): Promise<{
         message: string;
-        user: Promise<{
-            email: string;
-            password: string;
-            id: number;
-            role: import(".prisma/client").$Enums.Role;
-            createdAt: Date;
-        }>;
+        user: Promise<any>;
     }>;
     login(data: LoginDto): Promise<{
         access_token: string;

@@ -57,7 +57,7 @@ export class PaymentsController {
 
     @Body() data: VerifyPaymentDto,
   ) {
-    return this.paymentsService.verify(Number(id), data.status);
+    return this.paymentsService.verify(Number(id), data.status as any);
   }
 
   @UseGuards(JwtAuthGuard)

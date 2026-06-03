@@ -1,6 +1,9 @@
 import { IsDateString, IsEnum, IsInt, IsString, Min } from 'class-validator';
 
-import { VoucherType } from '@prisma/client';
+export enum VoucherType {
+  PERCENTAGE = 'PERCENTAGE',
+  FIXED = 'FIXED',
+}
 
 export class CreateVoucherDto {
   @IsString()

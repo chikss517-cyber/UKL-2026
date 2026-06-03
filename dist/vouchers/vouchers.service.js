@@ -12,7 +12,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.VouchersService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
-const client_1 = require("@prisma/client");
+var VoucherType;
+(function (VoucherType) {
+    VoucherType["PERCENT"] = "PERCENT";
+    VoucherType["FIXED"] = "FIXED";
+})(VoucherType || (VoucherType = {}));
 let VouchersService = class VouchersService {
     constructor(prisma) {
         this.prisma = prisma;
@@ -65,7 +69,7 @@ let VouchersService = class VouchersService {
             throw new common_1.BadRequestException(`Minimum purchase is ${voucher.minPurchase}`);
         }
         let finalTotal = data.total;
-        if (voucher.type === client_1.VoucherType.PERCENT) {
+        if (voucher.type === VoucherType.PERCENT) {
             finalTotal = data.total - (data.total * voucher.value) / 100;
         }
         else {

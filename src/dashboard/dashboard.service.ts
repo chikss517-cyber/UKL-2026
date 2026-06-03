@@ -26,10 +26,6 @@ export class DashboardService {
     }
 
     const recentOrders = await this.prisma.order.findMany({
-      include: {
-        user: true,
-      },
-
       orderBy: {
         id: 'desc',
       },

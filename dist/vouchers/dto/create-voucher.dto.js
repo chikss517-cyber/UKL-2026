@@ -9,9 +9,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateVoucherDto = void 0;
+exports.CreateVoucherDto = exports.VoucherType = void 0;
 const class_validator_1 = require("class-validator");
-const client_1 = require("@prisma/client");
+var VoucherType;
+(function (VoucherType) {
+    VoucherType["PERCENTAGE"] = "PERCENTAGE";
+    VoucherType["FIXED"] = "FIXED";
+})(VoucherType || (exports.VoucherType = VoucherType = {}));
 class CreateVoucherDto {
 }
 exports.CreateVoucherDto = CreateVoucherDto;
@@ -20,7 +24,7 @@ __decorate([
     __metadata("design:type", String)
 ], CreateVoucherDto.prototype, "code", void 0);
 __decorate([
-    (0, class_validator_1.IsEnum)(client_1.VoucherType),
+    (0, class_validator_1.IsEnum)(VoucherType),
     __metadata("design:type", String)
 ], CreateVoucherDto.prototype, "type", void 0);
 __decorate([

@@ -1,4 +1,7 @@
-import { VoucherType } from '@prisma/client';
+export declare enum VoucherType {
+    PERCENTAGE = "PERCENTAGE",
+    FIXED = "FIXED"
+}
 export declare class CreateVoucherDto {
     code: string;
     type: VoucherType;

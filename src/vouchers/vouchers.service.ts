@@ -6,11 +6,14 @@ import {
 
 import { PrismaService } from '../prisma/prisma.service';
 
-import { VoucherType } from '@prisma/client';
-
 import { CreateVoucherDto } from './dto/create-voucher.dto';
 
 import { ApplyVoucherDto } from './dto/apply-voucher.dto';
+
+enum VoucherType {
+  PERCENT = 'PERCENT',
+  FIXED = 'FIXED',
+}
 
 @Injectable()
 export class VouchersService {

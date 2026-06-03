@@ -1,6 +1,11 @@
 import { IsEnum } from 'class-validator';
 
-import { PaymentStatus } from '@prisma/client';
+export enum PaymentStatus {
+  PENDING = 'PENDING',
+  COMPLETED = 'COMPLETED',
+  FAILED = 'FAILED',
+  CANCELLED = 'CANCELLED',
+}
 
 export class VerifyPaymentDto {
   @IsEnum(PaymentStatus)

@@ -71,11 +71,6 @@ let OrdersService = class OrdersService {
     async findByUser(userId) {
         return this.prisma.order.findMany({
             where: { userId },
-            include: {
-                items: {
-                    include: { product: true },
-                },
-            },
             orderBy: {
                 id: 'desc',
             },
@@ -83,24 +78,12 @@ let OrdersService = class OrdersService {
     }
     async findAll() {
         return this.prisma.order.findMany({
-            include: {
-                user: true,
-                items: {
-                    include: { product: true },
-                },
-            },
             orderBy: { id: 'desc' },
         });
     }
     async findOne(id) {
         const order = await this.prisma.order.findUnique({
             where: { id },
-            include: {
-                user: true,
-                items: {
-                    include: { product: true },
-                },
-            },
         });
         if (!order) {
             throw new common_1.NotFoundException('Data pesanan tidak ditemukan');

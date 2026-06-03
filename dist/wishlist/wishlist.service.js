@@ -29,9 +29,6 @@ let WishlistService = class WishlistService {
             where: {
                 userId,
             },
-            include: {
-                product: true,
-            },
             orderBy: {
                 id: 'desc',
             },

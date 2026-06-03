@@ -4,37 +4,13 @@ import { ApplyVoucherDto } from './dto/apply-voucher.dto';
 export declare class VouchersController {
     private readonly vouchersService;
     constructor(vouchersService: VouchersService);
-    create(data: CreateVoucherDto): Promise<{
-        id: number;
-        value: number;
-        code: string;
-        type: import(".prisma/client").$Enums.VoucherType;
-        minPurchase: number | null;
-        expiredAt: Date;
-        active: boolean;
-    }>;
-    findAll(): Promise<{
-        id: number;
-        value: number;
-        code: string;
-        type: import(".prisma/client").$Enums.VoucherType;
-        minPurchase: number | null;
-        expiredAt: Date;
-        active: boolean;
-    }[]>;
+    create(data: CreateVoucherDto): Promise<any>;
+    findAll(): Promise<any>;
     apply(data: ApplyVoucherDto): Promise<{
-        voucher: string;
-        type: import(".prisma/client").$Enums.VoucherType;
-        value: number;
+        voucher: any;
+        type: any;
+        value: any;
         finalTotal: number;
     }>;
-    remove(id: string): Promise<{
-        id: number;
-        value: number;
-        code: string;
-        type: import(".prisma/client").$Enums.VoucherType;
-        minPurchase: number | null;
-        expiredAt: Date;
-        active: boolean;
-    }>;
+    remove(id: string): Promise<any>;
 }

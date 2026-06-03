@@ -11,8 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PaymentsService = void 0;
 const common_1 = require("@nestjs/common");
-const client_1 = require("@prisma/client");
 const prisma_service_1 = require("../prisma/prisma.service");
+const client_1 = require("@prisma/client");
 let PaymentsService = class PaymentsService {
     constructor(prisma) {
         this.prisma = prisma;
@@ -36,9 +36,6 @@ let PaymentsService = class PaymentsService {
     }
     async findAll() {
         return this.prisma.payment.findMany({
-            include: {
-                order: true,
-            },
             orderBy: {
                 id: 'desc',
             },
@@ -48,9 +45,6 @@ let PaymentsService = class PaymentsService {
         const payment = await this.prisma.payment.findUnique({
             where: {
                 id,
-            },
-            include: {
-                order: true,
             },
         });
         if (!payment) {
@@ -87,7 +81,7 @@ let PaymentsService = class PaymentsService {
                         id: payment.orderId,
                     },
                     data: {
-                        status: client_1.OrderStatus.PAID,
+                        status: 'PAID',
                     },
                 });
             }

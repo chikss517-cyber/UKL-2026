@@ -29,14 +29,14 @@ let CartService = class CartService {
                 },
             });
         }
-        const existingItem = await this.prisma.cartItem.findFirst({
+        const existingItem = await this.prisma.cartitem.findFirst({
             where: {
                 cartId: cart.id,
                 productId: data.productId,
             },
         });
         if (existingItem) {
-            return this.prisma.cartItem.update({
+            return this.prisma.cartitem.update({
                 where: {
                     id: existingItem.id,
                 },
@@ -45,7 +45,7 @@ let CartService = class CartService {
                 },
             });
         }
-        return this.prisma.cartItem.create({
+        return this.prisma.cartitem.create({
             data: {
                 cartId: cart.id,
                 productId: data.productId,
@@ -54,21 +54,29 @@ let CartService = class CartService {
         });
     }
     async findCart(userId) {
-        return this.prisma.cart.findFirst({
+        const cart = await this.prisma.cart.findFirst({
             where: {
                 userId,
             },
+        });
+        if (!cart) {
+            return null;
+        }
+        const cartItems = await this.prisma.cartitem.findMany({
+            where: {
+                cartId: cart.id,
+            },
             include: {
-                items: {
-                    include: {
-                        product: true,
-                    },
-                },
+                product: true,
             },
         });
+        return {
+            ...cart,
+            cartItems,
+        };
     }
     async updateQuantity(itemId, data) {
-        const item = await this.prisma.cartItem.findUnique({
+        const item = await this.prisma.cartitem.findUnique({
             where: {
                 id: itemId,
             },
@@ -76,7 +84,7 @@ let CartService = class CartService {
         if (!item) {
             throw new common_1.NotFoundException('Cart item not found');
         }
-        return this.prisma.cartItem.update({
+        return this.prisma.cartitem.update({
             where: {
                 id: itemId,
             },
@@ -86,7 +94,7 @@ let CartService = class CartService {
         });
     }
     async removeItem(itemId) {
-        const item = await this.prisma.cartItem.findUnique({
+        const item = await this.prisma.cartitem.findUnique({
             where: {
                 id: itemId,
             },
@@ -94,7 +102,7 @@ let CartService = class CartService {
         if (!item) {
             throw new common_1.NotFoundException('Cart item not found');
         }
-        return this.prisma.cartItem.delete({
+        return this.prisma.cartitem.delete({
             where: {
                 id: itemId,
             },
@@ -109,7 +117,7 @@ let CartService = class CartService {
         if (!cart) {
             throw new common_1.NotFoundException('Cart not found');
         }
-        return this.prisma.cartItem.deleteMany({
+        return this.prisma.cartitem.deleteMany({
             where: {
                 cartId: cart.id,
             },

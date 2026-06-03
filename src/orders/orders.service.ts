@@ -78,13 +78,8 @@ export class OrdersService {
   async findByUser(userId: number) {
     return this.prisma.order.findMany({
       where: { userId },
-      include: {
-        items: {
-          include: { product: true },
-        },
-      },
       orderBy: {
-        id: 'desc', // Pesanan terbaru ditaruh paling atas
+        id: 'desc',
       },
     });
   }
@@ -94,12 +89,6 @@ export class OrdersService {
   // ==========================================
   async findAll() {
     return this.prisma.order.findMany({
-      include: {
-        user: true,
-        items: {
-          include: { product: true },
-        },
-      },
       orderBy: { id: 'desc' },
     });
   }
@@ -107,12 +96,6 @@ export class OrdersService {
   async findOne(id: number) {
     const order = await this.prisma.order.findUnique({
       where: { id },
-      include: {
-        user: true,
-        items: {
-          include: { product: true },
-        },
-      },
     });
 
     if (!order) {

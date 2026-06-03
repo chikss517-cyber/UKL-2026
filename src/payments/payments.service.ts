@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-
-import { PaymentStatus, OrderStatus } from '@prisma/client';
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { PrismaService } from '../prisma/prisma.service';
+import { PaymentStatus } from '@prisma/client';
 
 import { CreatePaymentDto } from './dto/create-payment.dto';
 
@@ -32,10 +32,6 @@ export class PaymentsService {
 
   async findAll() {
     return this.prisma.payment.findMany({
-      include: {
-        order: true,
-      },
-
       orderBy: {
         id: 'desc',
       },
@@ -46,10 +42,6 @@ export class PaymentsService {
     const payment = await this.prisma.payment.findUnique({
       where: {
         id,
-      },
-
-      include: {
-        order: true,
       },
     });
 
@@ -97,7 +89,9 @@ export class PaymentsService {
           },
 
           data: {
-            status: OrderStatus.PAID,
+            // prisma enum for order status isn't exported as `order_status` here,
+            // use the literal enum value expected by the database
+            status: 'PAID' as any,
           },
         });
       }

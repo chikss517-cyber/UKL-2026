@@ -4,76 +4,9 @@ import { UpdateReviewDto } from './dto/update-review.dto';
 export declare class ReviewsService {
     private readonly prisma;
     constructor(prisma: PrismaService);
-    create(userId: number, data: CreateReviewDto): Promise<{
-        id: number;
-        createdAt: Date;
-        productId: number;
-        userId: number;
-        imageUrl: string | null;
-        rating: number;
-        comment: string | null;
-    }>;
-    findAll(): Promise<({
-        user: {
-            email: string;
-            password: string;
-            id: number;
-            role: import(".prisma/client").$Enums.Role;
-            createdAt: Date;
-        };
-        product: {
-            id: number;
-            createdAt: Date;
-            name: string;
-            price: number;
-            stock: number;
-            categoryId: number;
-            specs: import("@prisma/client/runtime/library").JsonValue;
-            description: string | null;
-            imageUrl: string | null;
-        };
-    } & {
-        id: number;
-        createdAt: Date;
-        productId: number;
-        userId: number;
-        imageUrl: string | null;
-        rating: number;
-        comment: string | null;
-    })[]>;
-    findByProduct(productId: number): Promise<({
-        user: {
-            email: string;
-            password: string;
-            id: number;
-            role: import(".prisma/client").$Enums.Role;
-            createdAt: Date;
-        };
-    } & {
-        id: number;
-        createdAt: Date;
-        productId: number;
-        userId: number;
-        imageUrl: string | null;
-        rating: number;
-        comment: string | null;
-    })[]>;
-    update(id: number, data: UpdateReviewDto): Promise<{
-        id: number;
-        createdAt: Date;
-        productId: number;
-        userId: number;
-        imageUrl: string | null;
-        rating: number;
-        comment: string | null;
-    }>;
-    remove(id: number): Promise<{
-        id: number;
-        createdAt: Date;
-        productId: number;
-        userId: number;
-        imageUrl: string | null;
-        rating: number;
-        comment: string | null;
-    }>;
+    create(userId: number, data: CreateReviewDto): Promise<any>;
+    findAll(): Promise<any>;
+    findByProduct(productId: number): Promise<any>;
+    update(id: number, data: UpdateReviewDto): Promise<any>;
+    remove(id: number): Promise<any>;
 }

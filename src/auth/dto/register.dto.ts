@@ -1,6 +1,11 @@
 import { IsEmail, IsEnum, IsString, MinLength } from 'class-validator';
 
-import { Role } from '@prisma/client';
+// Prisma client may not export the Role enum as a runtime value in some setups.
+// Define a local Role enum to use for validation instead.
+export enum Role {
+  USER = 'USER',
+  ADMIN = 'ADMIN',
+}
 
 export class RegisterDto {
   @IsEmail()

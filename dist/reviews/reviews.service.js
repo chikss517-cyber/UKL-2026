@@ -28,10 +28,6 @@ let ReviewsService = class ReviewsService {
     }
     async findAll() {
         return this.prisma.review.findMany({
-            include: {
-                user: true,
-                product: true,
-            },
             orderBy: {
                 id: 'desc',
             },
@@ -41,9 +37,6 @@ let ReviewsService = class ReviewsService {
         return this.prisma.review.findMany({
             where: {
                 productId,
-            },
-            include: {
-                user: true,
             },
             orderBy: {
                 id: 'desc',
