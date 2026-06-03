@@ -39,17 +39,17 @@ model order {
   phone         String
   paymentMethod String
   mapLink       String?
-
   createdAt     DateTime     @default(now())
 
   @@index([userId], map: "Order_userId_fkey")
 }
+
 model orderitem {
-  id        Int   @id @default(autoincrement())
-  orderId   Int
-  productId Int
-  quantity  Int
-  price     Float
+  id         Int   @id @default(autoincrement())
+  orderId    Int
+  productId  Int
+  quantity   Int
+  price      Float
   totalPrice Float
 
   @@index([orderId], map: "OrderItem_orderId_fkey")
