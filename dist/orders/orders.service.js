@@ -33,7 +33,7 @@ let OrdersService = class OrdersService {
         const shippingCost = total >= 500000 ? 0 : 25000;
         const grandTotal = total + shippingCost;
         return this.prisma.$transaction(async (tx) => {
-            const order = await tx.order.create({
+            const order = await tx.orders.create({
                 data: {
                     userId,
                     total: grandTotal,

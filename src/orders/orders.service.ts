@@ -32,7 +32,7 @@ export class OrdersService {
     const grandTotal = total + shippingCost;
 
     return this.prisma.$transaction(async (tx) => {
-      const order = await tx.order.create({
+      const order = await tx.orders.create({
         data: {
           userId,
           total: grandTotal,

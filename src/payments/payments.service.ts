@@ -83,7 +83,7 @@ export class PaymentsService {
       });
 
       if (status === PaymentStatus.PAID) {
-        await tx.order.update({
+        await tx.orders.update({
           where: {
             id: payment.orderId,
           },
