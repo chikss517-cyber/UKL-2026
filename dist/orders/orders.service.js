@@ -54,6 +54,7 @@ let OrdersService = class OrdersService {
                         productId: product.id,
                         quantity: item.quantity,
                         price: product.price,
+                        totalPrice: product.price * item.quantity,
                     },
                 });
                 await tx.product.update({

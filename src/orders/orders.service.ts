@@ -55,6 +55,7 @@ export class OrdersService {
             productId: product!.id,
             quantity: item.quantity,
             price: product!.price,
+            totalPrice: product!.price * item.quantity,
           },
         });
 
