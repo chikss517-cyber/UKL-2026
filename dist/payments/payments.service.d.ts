@@ -10,11 +10,11 @@ export declare class PaymentsService {
     uploadProof(id: number, proofUrl: string): Promise<any>;
     verify(id: number, status: PaymentStatus): Promise<{
         id: number;
+        status: import(".prisma/client").$Enums.PaymentStatus;
+        createdAt: Date;
         orderId: number;
         amount: number;
         proofUrl: string | null;
-        status: import(".prisma/client").$Enums.PaymentStatus;
-        createdAt: Date;
     }>;
     remove(id: number): Promise<any>;
 }
