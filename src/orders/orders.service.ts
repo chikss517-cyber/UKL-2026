@@ -48,10 +48,6 @@ export class OrdersService {
         data: {
           userId,
           total: grandTotal,
-          address: dto.address,
-          phone: dto.phone,
-          paymentMethod: dto.paymentMethod?.toUpperCase() || 'COD',
-          mapLink: dto.mapLink || null,
           status: 'PENDING',
         },
       });

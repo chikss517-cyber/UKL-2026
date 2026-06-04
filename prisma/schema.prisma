@@ -35,10 +35,6 @@ model order {
   userId        Int
   total         Float
   status        order_status @default(PENDING)
-  address       String
-  phone         String
-  paymentMethod String
-  mapLink       String?
   createdAt     DateTime     @default(now())
 
   @@index([userId], map: "Order_userId_fkey")
