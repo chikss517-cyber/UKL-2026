@@ -46,7 +46,6 @@ model orderitem {
   productId  Int
   quantity   Int
   price      Float
-  totalPrice Float
 
   @@index([orderId], map: "OrderItem_orderId_fkey")
   @@index([productId], map: "OrderItem_productId_fkey")
