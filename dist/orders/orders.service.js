@@ -17,7 +17,8 @@ let OrdersService = class OrdersService {
         this.prisma = prisma;
     }
     async checkout(userId, dto) {
-        console.log('REQ USER =', userId);
+        console.log('DTO SERVICE =', dto);
+        console.log('ITEMS =', dto.items);
         if (!dto.items || dto.items.length === 0) {
             throw new common_1.NotFoundException('Tidak ada item yang dikirim!');
         }

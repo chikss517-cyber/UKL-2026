@@ -23,6 +23,9 @@ checkout(
   @Body() dto: CheckoutDto,
 ) {
   console.log('REQ USER =', req.user);
+    console.log('BODY =', dto);
+     throw new Error('COBA MASUK SINI');
+
   return this.ordersService.checkout(
     req.user.id,
     dto,
@@ -42,6 +45,7 @@ checkout(
   @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
+      console.log('ANJING MASUK FINDALL');
     return this.ordersService.findAll();
   }
 

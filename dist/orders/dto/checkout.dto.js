@@ -15,6 +15,15 @@ class CheckoutDto {
 }
 exports.CheckoutDto = CheckoutDto;
 __decorate([
+    (0, class_validator_1.IsArray)(),
+    __metadata("design:type", Array)
+], CheckoutDto.prototype, "items", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsArray)(),
+    __metadata("design:type", Array)
+], CheckoutDto.prototype, "cartItems", void 0);
+__decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)

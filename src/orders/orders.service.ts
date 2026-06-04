@@ -8,11 +8,13 @@ export class OrdersService {
   // ==========================================
   // 🟢 1. LOGIKA PROSES SIMPAN CHECKOUT
   // ==========================================
-  async checkout(userId: number, dto: any) {
-    console.log('REQ USER =', userId);
-    if (!dto.items || dto.items.length === 0) {
-      throw new NotFoundException('Tidak ada item yang dikirim!');
-    }
+ async checkout(userId: number, dto: any) {
+  console.log('DTO SERVICE =', dto);
+  console.log('ITEMS =', dto.items);
+
+  if (!dto.items || dto.items.length === 0) {
+    throw new NotFoundException('Tidak ada item yang dikirim!');
+  }
     let total = 0;
 
     for (const item of dto.items) {
