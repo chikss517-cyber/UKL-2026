@@ -1,9 +1,9 @@
 import { OrdersService } from './orders.service';
+import { CheckoutDto } from './dto/checkout.dto';
 export declare class OrdersController {
     private readonly ordersService;
     constructor(ordersService: OrdersService);
-    checkout(req: any, dto: any): Promise<{
-        id: number;
+    checkout(req: any, dto: CheckoutDto): Promise<{
         userId: number;
         total: number;
         status: import(".prisma/client").$Enums.order_status;
@@ -12,6 +12,7 @@ export declare class OrdersController {
         paymentMethod: string;
         mapLink: string | null;
         createdAt: Date;
+        id: number;
     }>;
     findMyOrders(req: any): Promise<any>;
     findAll(): Promise<any>;

@@ -76,7 +76,7 @@ let PaymentsService = class PaymentsService {
                 },
             });
             if (status === verify_payment_dto_1.PaymentStatus.PAID) {
-                await tx.orders.update({
+                await tx.order.update({
                     where: {
                         id: payment.orderId,
                     },

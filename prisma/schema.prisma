@@ -30,7 +30,7 @@ model category {
   name String @unique(map: "Category_name_key")
 }
 
-model orders {
+model order {
   id            Int          @id @default(autoincrement())
   userId        Int
   total         Float

@@ -16,11 +16,13 @@ exports.OrdersController = void 0;
 const common_1 = require("@nestjs/common");
 const orders_service_1 = require("./orders.service");
 const jwt_auth_guard_1 = require("../auth/guard/jwt-auth.guard");
+const checkout_dto_1 = require("./dto/checkout.dto");
 let OrdersController = class OrdersController {
     constructor(ordersService) {
         this.ordersService = ordersService;
     }
     checkout(req, dto) {
+        console.log('REQ USER =', req.user);
         return this.ordersService.checkout(req.user.id, dto);
     }
     findMyOrders(req) {
@@ -35,12 +37,12 @@ let OrdersController = class OrdersController {
 };
 exports.OrdersController = OrdersController;
 __decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Post)('checkout'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [Object, checkout_dto_1.CheckoutDto]),
     __metadata("design:returntype", void 0)
 ], OrdersController.prototype, "checkout", null);
 __decorate([

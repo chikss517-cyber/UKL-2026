@@ -17,6 +17,7 @@ let OrdersService = class OrdersService {
         this.prisma = prisma;
     }
     async checkout(userId, dto) {
+        console.log('REQ USER =', userId);
         if (!dto.items || dto.items.length === 0) {
             throw new common_1.NotFoundException('Tidak ada item yang dikirim!');
         }
@@ -28,12 +29,19 @@ let OrdersService = class OrdersService {
             if (!product) {
                 throw new common_1.NotFoundException(`Produk ID ${item.productId || item.id} tidak ditemukan`);
             }
+            const user = await this.prisma.user.findUnique({
+                where: { id: userId },
+            });
+            if (!user) {
+                throw new common_1.NotFoundException(`User dengan id ${userId} tidak ditemukan`);
+            }
             total += product.price * item.quantity;
         }
         const shippingCost = total >= 500000 ? 0 : 25000;
         const grandTotal = total + shippingCost;
         return this.prisma.$transaction(async (tx) => {
-            const order = await tx.orders.create({
+            console.log('userId =', userId);
+            const order = await tx.order.create({
                 data: {
                     userId,
                     total: grandTotal,

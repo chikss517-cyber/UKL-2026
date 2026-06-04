@@ -10,16 +10,24 @@ import {
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard'; // Gembok token login
+import { CheckoutDto } from './dto/checkout.dto';
 
 @Controller('orders') // 1. Ini adalah URL UTAMA kamu -> http://localhost:3001/orders
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
-  @UseGuards(JwtAuthGuard)
-  @Post('checkout')
-  checkout(@Req() req, @Body() dto: any) {
-    return this.ordersService.checkout(req.user.id, dto);
-  }
+@Post('checkout')
+@UseGuards(JwtAuthGuard)
+checkout(
+  @Req() req,
+  @Body() dto: CheckoutDto,
+) {
+  console.log('REQ USER =', req.user);
+  return this.ordersService.checkout(
+    req.user.id,
+    dto,
+  );
+}
 
   @UseGuards(JwtAuthGuard) // Harus login juga
   @Get('my-orders') // Sub-rute GET. URL lengkap: GET http://localhost:3001/orders/my-orders
