@@ -38,7 +38,11 @@ export class OrdersService {
         );
       }
 
-      total += product.price * item.quantity;
+      if (product.stock < item.quantity) {
+        throw new NotFoundException(
+          `Stok produk ${product.name} tidak cukup. Tersisa ${product.stock}`,
+        );
+      }
     }
 
     const shippingCost = total >= 500000 ? 0 : 25000;
@@ -85,14 +89,21 @@ export class OrdersService {
   // ==========================================
   // 🔵 2. AMBIL RIWAYAT PESANAN PER USER (Pelanggan)
   // ==========================================
-  async findByUser(userId: number) {
-    return this.prisma.order.findMany({
-      where: { userId },
-      orderBy: {
-        id: 'desc',
+async findByUser(userId: number) {
+  return this.prisma.order.findMany({
+    where: { userId },
+    orderBy: {
+      id: 'desc',
+    },
+    include: {
+      orderitem: {
+        include: {
+          product: true,
+        },
       },
-    });
-  }
+    },
+  });
+}
 
   // ==========================================
   // 🟡 3. RUTE PEMBANTU LAINNYA (Admin & Detail)

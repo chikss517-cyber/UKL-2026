@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { OrdersService } from './orders.service';
+// use Jest globals (do not import from node:test)
 
 describe('OrdersService', () => {
   let service: OrdersService;
@@ -16,3 +17,4 @@ describe('OrdersService', () => {
     expect(service).toBeDefined();
   });
 });
+

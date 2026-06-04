@@ -36,7 +36,9 @@ let OrdersService = class OrdersService {
             if (!user) {
                 throw new common_1.NotFoundException(`User dengan id ${userId} tidak ditemukan`);
             }
-            total += product.price * item.quantity;
+            if (product.stock < item.quantity) {
+                throw new common_1.NotFoundException(`Stok produk ${product.name} tidak cukup. Tersisa ${product.stock}`);
+            }
         }
         const shippingCost = total >= 500000 ? 0 : 25000;
         const grandTotal = total + shippingCost;
@@ -78,6 +80,13 @@ let OrdersService = class OrdersService {
             where: { userId },
             orderBy: {
                 id: 'desc',
+            },
+            include: {
+                orderitem: {
+                    include: {
+                        product: true,
+                    },
+                },
             },
         });
     }
