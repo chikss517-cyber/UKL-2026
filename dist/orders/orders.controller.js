@@ -24,7 +24,6 @@ let OrdersController = class OrdersController {
     checkout(req, dto) {
         console.log('REQ USER =', req.user);
         console.log('BODY =', dto);
-        throw new Error('COBA MASUK SINI');
         return this.ordersService.checkout(req.user.id, dto);
     }
     findMyOrders(req) {
