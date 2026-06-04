@@ -8,13 +8,6 @@ export declare class PaymentsController {
     findAll(): Promise<any>;
     findOne(id: string): Promise<any>;
     uploadProof(id: string, file: Express.Multer.File): Promise<any>;
-    verify(id: string, data: VerifyPaymentDto): Promise<{
-        id: number;
-        status: import(".prisma/client").$Enums.payment_status;
-        createdAt: Date;
-        orderId: number;
-        amount: number;
-        proofUrl: string | null;
-    }>;
+    verify(id: string, data: VerifyPaymentDto): Promise<any>;
     remove(id: string): Promise<any>;
 }

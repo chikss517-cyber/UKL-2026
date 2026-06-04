@@ -36,6 +36,7 @@ let OrdersService = class OrdersService {
             if (!user) {
                 throw new common_1.NotFoundException(`User dengan id ${userId} tidak ditemukan`);
             }
+            total += product.price * item.quantity;
             if (product.stock < item.quantity) {
                 throw new common_1.NotFoundException(`Stok produk ${product.name} tidak cukup. Tersisa ${product.stock}`);
             }
@@ -48,6 +49,10 @@ let OrdersService = class OrdersService {
                 data: {
                     userId,
                     total: grandTotal,
+                    address: dto.address,
+                    phone: dto.phone,
+                    mapLink: dto.mapLink,
+                    paymentMethod: dto.paymentMethod,
                     status: 'PENDING',
                 },
             });
@@ -80,13 +85,6 @@ let OrdersService = class OrdersService {
             where: { userId },
             orderBy: {
                 id: 'desc',
-            },
-            include: {
-                orderitem: {
-                    include: {
-                        product: true,
-                    },
-                },
             },
         });
     }

@@ -71,7 +71,7 @@ export class PaymentsService {
   async verify(id: number, status: PaymentStatus) {
     const payment = await this.findOne(id);
 
-    return this.prisma.$transaction(async (tx) => {
+    return this.prisma.$transaction(async (tx: any) => {
       const updatedPayment = await tx.payment.update({
         where: {
           id,

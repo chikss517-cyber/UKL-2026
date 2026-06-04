@@ -15,11 +15,11 @@ const categories_module_1 = require("./categories/categories.module");
 const cart_module_1 = require("./cart/cart.module");
 const products_module_1 = require("./products/products.module");
 const orders_module_1 = require("./orders/orders.module");
-const payments_module_1 = require("./payments/payments.module");
 const wishlist_module_1 = require("./wishlist/wishlist.module");
 const reviews_module_1 = require("./reviews/reviews.module");
 const vouchers_module_1 = require("./vouchers/vouchers.module");
 const dashboard_module_1 = require("./dashboard/dashboard.module");
+const payments_module_1 = require("./payments/payments.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;

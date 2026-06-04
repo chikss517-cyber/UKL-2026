@@ -38,6 +38,8 @@ export class OrdersService {
         );
       }
 
+      total += product.price * item.quantity;
+
       if (product.stock < item.quantity) {
         throw new NotFoundException(
           `Stok produk ${product.name} tidak cukup. Tersisa ${product.stock}`,
@@ -48,12 +50,16 @@ export class OrdersService {
     const shippingCost = total >= 500000 ? 0 : 25000;
     const grandTotal = total + shippingCost;
 
-    return this.prisma.$transaction(async (tx) => {
+    return this.prisma.$transaction(async (tx: any) => {
       console.log('userId =', userId);
       const order = await tx.order.create({
         data: {
           userId,
           total: grandTotal,
+          address: dto.address,
+          phone: dto.phone,
+          mapLink: dto.mapLink,
+          paymentMethod: dto.paymentMethod,
           status: 'PENDING',
         },
       });
@@ -94,13 +100,6 @@ async findByUser(userId: number) {
     where: { userId },
     orderBy: {
       id: 'desc',
-    },
-    include: {
-      orderitem: {
-        include: {
-          product: true,
-        },
-      },
     },
   });
 }

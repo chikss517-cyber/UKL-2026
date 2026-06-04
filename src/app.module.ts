@@ -6,11 +6,11 @@ import { CategoriesModule } from './categories/categories.module';
 import { CartModule } from './cart/cart.module';
 import { ProductsModule } from './products/products.module';
 import { OrdersModule } from './orders/orders.module';
-import { PaymentsModule } from './payments/payments.module';
 import { WishlistModule } from './wishlist/wishlist.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { VouchersModule } from './vouchers/vouchers.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { PaymentsModule } from './payments/payments.module';
 
 @Module({
   imports: [
@@ -20,7 +20,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
     CartModule,
     ProductsModule,
     OrdersModule,
-    PaymentsModule,
+   PaymentsModule,
     WishlistModule,
     ReviewsModule,
     VouchersModule,

@@ -8,13 +8,6 @@ export declare class PaymentsService {
     findAll(): Promise<any>;
     findOne(id: number): Promise<any>;
     uploadProof(id: number, proofUrl: string): Promise<any>;
-    verify(id: number, status: PaymentStatus): Promise<{
-        id: number;
-        status: import(".prisma/client").$Enums.payment_status;
-        createdAt: Date;
-        orderId: number;
-        amount: number;
-        proofUrl: string | null;
-    }>;
+    verify(id: number, status: PaymentStatus): Promise<any>;
     remove(id: number): Promise<any>;
 }
